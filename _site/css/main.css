@@ -50,6 +50,10 @@ html{
   padding: 0 30px;
   box-shadow: 0px 0px 0px 30px #000 inset;
 }
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", helvetica, sans;
+  font-weight: 100;
+}
 h1 {
   font-size: 6vw;
   margin-top: 0;
@@ -70,7 +74,7 @@ a {
   color: #6397b5;
 }
 body {
-  font-family: helvetica, arial, sans;
+  font-family: "Open Sans", helvetica, arial, sans;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -109,10 +113,12 @@ h2 ~ p {
   border-left: 1px solid rgba(255, 255, 255, 0.3);
   padding-left: 1em;
 }
-.header-nav a {
+.header-nav a,
+.drop-trigger {
   color: #fff;
 }
-.nav-links a{
+.nav-links a,
+.drop-trigger {
   font-size: 0.8rem;
   font-weight: bold;
   text-decoration: none;
@@ -146,6 +152,93 @@ h2 ~ p {
 .header-nav > li:first-child a:hover {
   color: #fff;
 }
+/* DROPDOWN STYLES */
+.dropdown {
+  position: relative;
+}
+.dropdown:hover .drop-menu {
+  display: block;
+}
+.dropdown:hover .drop-trigger:after {
+  border-color: #ed6e2f transparent transparent;
+}
+.drop-trigger {
+  display: inline-block;
+  padding-right: 1.5em;
+  position: relative;
+}
+.drop-trigger:after {
+  border: 0.3em solid;
+  border-color: #fff transparent transparent;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: 0;
+  top: 0.3em;
+  width: 0;
+}
+.drop-menu {
+  display: none;
+  list-style: none;
+  padding: 1em 0 0;
+  position: absolute;
+  right: 0;
+  z-index: 9;
+}
+.drop-menu li {
+  background-color: #fff;
+}
+.drop-menu a {
+  color: #333;
+  display: block;
+  font-weight: normal;
+  padding: 0.5em 2em 0.5em 1em;
+  text-align: left;
+  text-transform: none;
+  white-space: nowrap;
+}
+.drop-menu a:hover {
+  background-color: rgba(0,0,0,0.1);
+  color: #333;
+}
+.drop-menu:before {
+  border: 0.6em solid;
+  border-color: transparent transparent #fff;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: 1em;
+  top: -0.1em;
+  width: 0;
+}
+.drop-menu li ~ li {
+  border-top: 1px dotted rgba(0,0,0,0.1)
+}
+.drop-menu li:first-child {
+  border-radius: 5px 5px 0 0;
+  color: #999;
+  font-size: 0.5em;
+  padding: 1em 1em 0.25em;
+  text-align: right;
+  text-transform: uppercase;
+}
+.drop-menu li:last-child {
+  border-radius: 0 0 5px 5px;
+}
+/* HIDE IN THE FOOTER */
+.footer .dropdown:hover .drop-menu,
+.footer .drop-trigger:after {
+  display: none;
+}
+.footer .drop-trigger {
+  padding-right: 0;
+}
+/*MOBILE MENU*/
+.mobile-menu-check,
+.show-mobile-menu {
+  display: none;
+}
+
 
 /*FOOTER STYLES*/
 .footer {
@@ -278,15 +371,15 @@ h2 ~ p {
   color: #fff;
   display: inline-block;
   font-family: helvetica, arial, sans;
-  font-size: 1rem;
+  font-size: 1.6em;
   font-weight: bold;
-  height: 2.5em;
+  height: 1.7em;
   line-height: 1;
-  padding-top: 0.85em;
+  padding-top: 0.4em;
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
-  width: 2.5em;
+  width: 1.7em;
 }
 .social-list {
   list-style: none;
@@ -455,7 +548,8 @@ h2 ~ p {
   margin-bottom: 1.5em;
 }
 .post{
-  width:100%;
+  /* width:100%; we can use this or flex:1*/
+  flex:1;
 }
 .post-content,
 .post-footer{
@@ -486,4 +580,136 @@ h2 ~ p {
   font-size: 0.8em;
   margin-top: 3em;
   padding-top: 2em;
+}
+
+@media (max-width: 800px) {
+  html {
+    box-shadow: none;
+    padding: 0;
+  }
+  /*BLOG STYLES*/
+  .blog-cols{
+    flex-direction: column;
+  }
+  .blog-recent {
+    flex: 1;
+    text-align: center;
+  }
+  .post-aside {
+    display: none;
+  }
+  /*HEADER STYLES*/
+  .header-nav {
+   padding: 2vh 1em 0 0;
+ }
+ .header-nav > li {
+   margin-left: 0.25em;
+ }
+ .header-nav > li ~ li {
+   padding-left: 0.25em;
+ }
+ .nav-links a {
+   font-size: 3.25vw;
+ }
+ /*MOBILE STYLES*/
+.show-mobile-menu {
+   display: block;
+   float: right;
+   font-weight: bold;
+   padding: 1.5em;
+   position:relative;
+   margin-top: 1.5vh;
+   text-transform: uppercase;
+ }
+.header-nav {
+    background-color: #444;
+    box-sizing: border-box;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    left:0;
+    top:10vh;
+    transition: all 0.5s ease-in-out;
+    width: 100vw;
+    z-index: 9;
+    }
+.header-nav li {
+  display: block;
+  margin-top: 1em;
+
+  }
+
+.header-nav li:last-child {
+  margin-bottom: 1em;
+  }
+.header-nav li:first-child a {
+  color: #fff;
+}
+/*HIDE DROPDOWN IN THE NAV MENU*/
+.mobile-menu-check:checked ~ .header-nav {
+  max-height: 1000px;
+
+}
+.header-nav .drop-trigger {
+  padding-right: 0;
+}
+.header-nav .dropdown:hover .drop-menu,
+.header-nav .drop-trigger:after {
+  display: none;
+}
+.mobile-menu-check:checked ~.show-mobile-menu:after {
+  background-color: #000;
+  color: #ed6e2f;
+  content: "CLOSE";
+  left: 0;
+  position: absolute;
+  top: 1.5em;
+  width: 100%;
+  text-align: center;
+}
+
+ /*GLOBAL MENU*/
+
+ .header-logo {
+   left: auto;
+ }
+
+ /*GALLERY STYLES*/
+ .gallery {
+    flex-direction: column;
+  }
+  .gallery .col {
+    padding: 1em;
+  }
+  .gallery .gallery-thumbs {
+    flex: 1;
+    height: auto;
+    white-space: nowrap;
+    width: 100vw;
+  }
+  .gallery-thumbs > div {
+    display: inline-block;
+  }
+  .gallery-thumbs img {
+    height: 7vh;
+    margin: 0 10px 0 0;
+    width: auto;
+  }
+  .gallery .gallery-info {
+    flex: 1;
+  }
+ /* HOME STYLES */
+  .home-callout {
+    flex-direction: column;
+  }
+  .callout-copy {
+    flex: 1;
+  }
+  .bio-box {
+    float: none;
+    font-size: 1.3rem;
+    width: auto;
+  }
 }
